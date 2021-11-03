@@ -3,10 +3,19 @@ import Cookies from 'js-cookie'
 import Web3 from 'web3';
 import Web3Token from 'web3-token';
 import styles from '../styles/Home.module.css'
+import faunadb, { 
+  Get,
+  Paginate,
+  Documents,
+  Collection,
+  Lambda,
+  Map
+} from 'faunadb';
 
 export default function Home() {
 
   const [isLoggedin, setLoggedin] = useState(false);
+
   
   useEffect(() => {
     const authToken = Cookies.get('fauna-auth');
@@ -33,7 +42,15 @@ export default function Home() {
   }
 
   const queryDate = async () => {
-    
+    const authToken = Cookies.get('fauna-auth');
+    const faunaClient = new faunadb.Client({ secret: authToken });
+    const movies = await faunaClient.query(
+      Map(
+        Paginate(Documents(Collection('Movie'))),
+        Lambda(x => Get(x))
+      )
+    )
+    console.log('--->', movies);
   }
 
   return (
