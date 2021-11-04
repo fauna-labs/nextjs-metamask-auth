@@ -36,9 +36,14 @@ export default function Home() {
       }),
     });
     const { token } = await response.json();
-    const one_hour = new Date(new Date().getTime() +  3600 * 1000);
+    const one_hour = new Date(new Date().getTime() +  3600 * 1000) // sign token for 1 hour
     Cookies.set('fauna-auth', token, { expires: one_hour })
     setLoggedin(true)
+  }
+
+  const logout = () => {
+    Cookies.remove('fauna-auth')
+    setLoggedin(false)
   }
 
   const queryDate = async () => {
@@ -57,9 +62,13 @@ export default function Home() {
     <div className={styles.container}>
       <main className={styles.main}>
         {isLoggedin ? (
-          <button onClick={queryDate}>Query Data</button>
+          <>
+            <button onClick={queryDate}>Query Data</button>
+            <button onClick={logout}>Logout</button>
+          </>
         ) : 
-        <button onClick={login}>Login with Metamask</button> }
+        <button onClick={login}>Login with Metamask</button> 
+        }
       </main>
     </div>
   )
