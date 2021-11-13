@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie' 
 import Web3 from 'web3';
@@ -59,17 +60,30 @@ export default function Home() {
   }
 
   return (
+    <>
+    <Head>
+      <title>My page title</title>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.9.2/dist/css/uikit.min.css" />
+    </Head>
     <div className={styles.container}>
       <main className={styles.main}>
         {isLoggedin ? (
           <>
-            <button onClick={queryDate}>Query Data</button>
-            <button onClick={logout}>Logout</button>
+            <button   
+              className="uk-button uk-button-default" 
+              style={{ marginBottom: '10px' }}
+              onClick={queryDate}
+            >
+              Query Data
+            </button>
+            <button className="uk-button uk-button-danger" onClick={logout}>Logout</button>
           </>
         ) : 
-        <button onClick={login}>Login with Metamask</button> 
+        <button className="uk-button uk-button-primary uk-button-large" onClick={login}>Login with Metamask</button> 
         }
       </main>
     </div>
+    </>
   )
 }
