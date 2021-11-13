@@ -16,6 +16,7 @@ const serverClient = new faunadb.Client({ secret: process.env.FAUNA_SECRECT });
 export default async function handler(req, res) {
   const {signed_msg} = JSON.parse(req.body);
   const { address, body } = await Web3Token.verify(signed_msg);
+  console.log('Public Address Retrieved', address);
 
   try {
     // Find user 
@@ -24,7 +25,6 @@ export default async function handler(req, res) {
         Match(Index('user_by_public_address'), address)
       )
     )
-
     const accessToken = await createAccessToken(user.ref.id, 3600);
     res.status(200).json({ token: accessToken.secret });
   

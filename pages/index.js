@@ -50,7 +50,6 @@ export default function Home() {
       Cookies.set('fauna-auth', token, { expires: one_hour })
       setLoggedin(true)
     } catch (error) {
-      console.log('EERR', error)
       alert('Please Install Metamask Wallet')
       return;
     }
@@ -61,7 +60,7 @@ export default function Home() {
     setLoggedin(false)
   }
 
-  const queryDate = async () => {
+  const queryData = async () => {
     const authToken = Cookies.get('fauna-auth');
     const faunaClient = new faunadb.Client({ secret: authToken });
     const movies = await faunaClient.query(
@@ -87,7 +86,7 @@ export default function Home() {
             <button   
               className="uk-button uk-button-default" 
               style={{ marginBottom: '10px' }}
-              onClick={queryDate}
+              onClick={queryData}
             >
               Query Data
             </button>
