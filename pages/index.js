@@ -28,28 +28,32 @@ export default function Home() {
   const login = async () => {
     const web3 = new Web3(window.ethereum);
     try {
-      await window.ethereum.enable(); 
+      const accounts = await window.ethereum.send(
+        "eth_requestAccounts"
+      )
+      console.log('accounts', accounts.result[0]);
+      const address = accounts.result[0];
+      const signed_msg = await Web3Token.sign(msg => web3.eth.personal.sign(msg, address), '1h');
+      const response = await fetch('api/user', {
+        method: 'POST',
+        body: JSON.stringify({
+          signed_msg
+        }),
+      });
+
+      if(response.status !== 200) {
+        return;
+      }
+      
+      const { token } = await response.json();
+      const one_hour = new Date(new Date().getTime() +  3600 * 1000) // sign token for 1 hour
+      Cookies.set('fauna-auth', token, { expires: one_hour })
+      setLoggedin(true)
     } catch (error) {
+      console.log('EERR', error)
       alert('Please Install Metamask Wallet')
       return;
     }
-    const address = (await web3.eth.getAccounts())[0];
-    const signed_msg = await Web3Token.sign(msg => web3.eth.personal.sign(msg, address), '1h');
-    const response = await fetch('api/user', {
-      method: 'POST',
-      body: JSON.stringify({
-        signed_msg
-      }),
-    });
-
-    if(response.status !== 200) {
-      return;
-    }
-    
-    const { token } = await response.json();
-    const one_hour = new Date(new Date().getTime() +  3600 * 1000) // sign token for 1 hour
-    Cookies.set('fauna-auth', token, { expires: one_hour })
-    setLoggedin(true)
   }
 
   const logout = () => {
