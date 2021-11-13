@@ -33,7 +33,12 @@ export default async function handler(req, res) {
     if(error.name === 'NotFound') {
       const newUser = await registerUser(address)
       const accessToken = await createAccessToken(newUser.ref.id, 3600);
-      res.status(200).json({ token: accessToken.secret });
+      return res.status(200).json({ token: accessToken.secret });
+    }
+
+    // authentication error
+    if (error.name === 'Unauthorized') {
+      return res.status(401).json({ message: 'Invalid Fauna Secrect or Token' });
     }
   }
   
