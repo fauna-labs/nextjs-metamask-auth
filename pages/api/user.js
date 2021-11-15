@@ -11,7 +11,7 @@ import faunadb, {
   Ref
 } from 'faunadb';
 
-const serverClient = new faunadb.Client({ secret: process.env.FAUNA_SECRECT });
+const serverClient = new faunadb.Client({ secret: process.env.FAUNA_SECRET });
 
 export default async function handler(req, res) {
   const {signed_msg} = JSON.parse(req.body);
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
 
     // authentication error
     if (error.name === 'Unauthorized') {
-      return res.status(401).json({ message: 'Invalid Fauna Secrect or Token' });
+      return res.status(401).json({ message: 'Invalid Fauna Secret or Token' });
     }
   }
   
