@@ -66,4 +66,3 @@ const createAccessToken = (ref, ttl) => {
     })
   );
 };
-  
