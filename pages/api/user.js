@@ -1,3 +1,6 @@
+// Copyright Fauna, Inc.
+// SPDX-License-Identifier: MIT-0
+
 import Web3Token from 'web3-token';
 import faunadb, { 
   Get,

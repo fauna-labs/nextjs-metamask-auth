@@ -1,3 +1,5 @@
+// Copyright Fauna, Inc.
+// SPDX-License-Identifier: MIT-0
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
 import Cookies from 'js-cookie' 
