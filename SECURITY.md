@@ -1,3 +1,17 @@
+# Security Policy
+
+## Supported Versions
+
+The following versions of this software currently receive support for
+security vulnerabilities:
+
+| Version | Supported          |
+| ------- | ------------------ |
+| <SEMVER>| :white_check_mark: |
+| <SEMVER>| :x:                |
+
+End of life (EOL) dates for security support will be posted here.
+
 ## Reporting a Vulnerability
 
 If you believe you have found a vulnerability in this repository, please
